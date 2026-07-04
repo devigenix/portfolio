@@ -191,7 +191,7 @@ export default function Portfolio() {
     setStatus("sending");
     try {
       // Replace YOUR_FORM_ID below with your real Formspree form ID (see formspree.io)
-      const res = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
+      const res = await fetch("https://formspree.io/f/mykqlayk", {
         method: "POST",
         headers: { Accept: "application/json", "Content-Type": "application/json" },
         body: JSON.stringify(formData),
