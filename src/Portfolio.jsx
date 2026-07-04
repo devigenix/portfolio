@@ -171,6 +171,7 @@ export default function Portfolio() {
   const [navSolid, setNavSolid] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState("idle"); // idle | sending | sent | error
+  const [certFilter, setCertFilter] = useState("All");
 
   useEffect(() => {
     const onScroll = () => setNavSolid(window.scrollY > 40);
@@ -560,10 +561,11 @@ export default function Portfolio() {
             {certCategories.map((cat) => (
               <span
                 key={cat}
+                onClick={() => setCertFilter(cat)}
                 className="skill-pill"
                 style={{
-                  border: cat === "All" ? `1px solid ${ACCENT}` : "1px solid #ffffff20",
-                  color: cat === "All" ? ACCENT : "#C8D0DA",
+                  border: cat === certFilter ? `1px solid ${ACCENT}` : "1px solid #ffffff20",
+                  color: cat === certFilter ? ACCENT : "#C8D0DA",
                   borderRadius: "20px",
                   padding: "8px 18px",
                   fontSize: "13px",
@@ -577,7 +579,9 @@ export default function Portfolio() {
           </div>
         </Reveal>
 
-        {certificates.length === 0 ? (
+        {(() => {
+          const filteredCerts = certFilter === "All" ? certificates : certificates.filter((c) => c.category === certFilter);
+          return filteredCerts.length === 0 ? (
           <Reveal>
             <div
               style={{
@@ -605,7 +609,7 @@ export default function Portfolio() {
           </Reveal>
         ) : (
           <div className="grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "20px" }}>
-            {certificates.map((c) => (
+            {filteredCerts.map((c) => (
               <Reveal key={c.title}>
                 <div
                   style={{
@@ -652,7 +656,8 @@ export default function Portfolio() {
               </Reveal>
             ))}
           </div>
-        )}
+        );
+        })()}
       </section>
 
       <section id="contact" style={{ position: "relative", zIndex: 1, padding: "0 48px 100px", maxWidth: "1000px" }}>
